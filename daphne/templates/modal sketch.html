@@ -1,0 +1,87 @@
+<style type="text/css">
+    .modal-bg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(51, 51, 51, 0.64);
+    }
+    .modal-wrap{
+        background: white;
+        position: absolute;
+        top: 100px;
+        left: 50px;
+        right: 50px;
+        bottom: 100px;
+    }
+    .top, .middle, .bottom{
+        width: 100%;
+        border-top: 1px solid #ccc;
+        background: white;
+    }
+    .top{
+        margin-top: -50px;
+    }
+    .top, .bottom{
+        height: 50px;
+    }
+    .middle{
+        height: 100%;
+        display: inline-block;
+        overflow: scroll;
+    }
+    .left, .right{
+        height: 100%;
+        float: left;
+    }
+    .left{
+        width: 75%;
+    }
+    .right{
+        width: 25%;
+    }
+    .modal-wrap textarea{
+        border: none;
+        width: 100%;
+        height: 100%;
+        background: #f5f5f5;
+    }
+</style>
+
+<!-- <div class="container">
+    <div class="modal-bg"></div>
+     <div class="modal">
+        <div class="top">top</div>
+        <div class="split">
+            <div class="middle">
+                <div class="left">
+                    <textarea></textarea>
+                </div>
+                <div class="right">
+                    <input type="file">
+                </div>
+            </div>
+        </div>
+        <div class="bottom">bottom</div>
+    </div>
+</div> -->
+
+<div class="container">
+    <div id="modalTemplate" class="split">
+    <div class="modal-bg"></div>
+     <div class="modal-wrap">
+        <div class="modal-content">
+            <div class="top">top</div>
+                <div class="middle ib">
+                <div class="left">
+                        <textarea></textarea>
+                </div>
+                <div class="right">
+                <input type="file">
+                </div>
+                </div>
+            <div class="bottom"><a href="#">bottom</a></div>
+        </div>
+    </div>
+</div>

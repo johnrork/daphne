@@ -1,0 +1,147 @@
+{% extends 'react_base.html' %}
+{% block body %}
+    <style>
+        .template{
+            display: none;
+        }
+        .modal-bg{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(51, 51, 51, 0.64);
+        }
+        .modal{
+            opacity: 0;
+            -webkit-transition: opacity .5s;
+        }
+        .modal-wrap{
+            background: white;
+            position: absolute;
+            top: 100px;
+            left: 50px;
+            right: 50px;
+            bottom: 100px;
+        }
+        .modal.active{
+            opacity: 1;
+        }
+        .modal-top, .modal-content, .modal-bottom{
+            width: 100%;
+            background: white;
+        }
+        .modal-top{
+            margin-top: -50px;
+        }
+        .modal-bottom{
+            margin-top: -4px;
+        }
+        .modal-top, .modal-bottom{
+            height: 50px;
+        }
+        .modal-content{
+            height: 100%;
+            display: inline-block;
+            overflow: scroll;
+            padding: 5px 0; /* takes a way a little wiggle room around textarea */
+        }
+        .modal-left, .modal-right{
+            height: 100%;
+            float: left;
+        }
+        .modal-left{
+            width: 75%;
+        }
+        .modal-right{
+            width: 25%;
+        }
+        .modal-wrap textarea{
+            border: none;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+    </style>
+
+    <div class="container">
+        <div id="modalTemplate" class="template split">
+        <div class="modal">
+        <div class="modal-bg"></div>
+         <div class="modal-wrap">
+            <div class="modal-top">
+            <a href="javascript:;" class="close-modal">Close</a>
+                <span class="title"></span>
+            </div>
+                <div class="modal-content">
+
+                </div>
+            <div class="modal-bottom"><a href="#">bottom</a></div>
+        </div>
+        </div>
+    </div>
+
+    <div id="splitContentTemplate" class="template">
+        <div class="modal-left">
+            <textarea></textarea>
+        </div>
+    </div>
+
+    <div class="section section-text">
+        This is text
+    </div>
+
+    <button>test</button>
+{% endblock body %}
+
+{% block footer %}
+    <script>
+        function removeModal($selector){
+            $selector = $selector || $('.active.modal')
+            $selector.removeClass('active').addClass('outgoing')
+            setTimeout(function(){ $('.outgoing').remove() }, 500)
+        }
+
+        function showModal(opts){
+            removeModal()
+
+            var inst = new Date().getTime()
+            var options = {
+                title: 'MODAL',
+                content: 'testing',
+                buttons: [],
+                template: '#modalTemplate'
+            }
+            $.extend(options, opts)
+            var template = $(options.template).html()
+            var $t = $(template)
+
+            $t.addClass('modal-'+inst)
+            $t.find('.title').html(options.title)
+
+            $t.find('.modal-content').html(options.content)
+
+            $('body').append($t)
+            setTimeout(function(){
+                $('.modal-'+inst).addClass("active modal")
+            }, 100)
+
+            $('a.close-modal').on('click', function(){
+                removeModal($(this).parents('.modal'))
+            })
+        }
+
+        function splitContent(){
+            var data = 'aoeu'
+            var template = $('#splitContentTemplate').html()
+            var $t = $(template)
+            $t.find('textarea').html(data)
+            return $t
+        }
+
+        $('button').on('click', showModal)
+    </script>
+
+{% endblock footer %}

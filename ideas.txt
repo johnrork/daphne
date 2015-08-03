@@ -1,0 +1,1 @@
+- Caching. Not every view should have to do a db lookup by slug

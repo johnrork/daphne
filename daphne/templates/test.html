@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>{{ page.title }}</h1>
+    <div data-section="TextImage" data-section-id=2>
+        this is a reserved section
+    </div>
+    {% for section in page.content %}
+        <div data-type="{{section.type}}" data-id="{{section.id}}"class="section {{section.classes}}">
+            {{ section }}
+            {{ section.order }}
+            {{ section.get_content }}
+        </div>
+    {% endfor %}
+{% endblock body %}
+
+{% block footer %}
+
+    <div class="container">
+        <div id="modalTemplate" class="template split">
+        <div class="modal">
+        <div class="modal-bg"></div>
+         <div class="modal-wrap">
+            <div class="modal-top">
+            <a href="javascript:;" class="close-modal">Close</a>
+                <span class="title"></span>
+            </div>
+                <div class="modal-content">
+
+                </div>
+            <div class="modal-bottom"><a href="#">bottom</a></div>
+        </div>
+        </div>
+    </div>
+
+    <div id="splitContentTemplate" class="template">
+        <div class="modal-left">
+            <textarea></textarea>
+        </div>
+    </div>
+    <script>
+        function removeModal($selector){
+            $selector = $selector || $('.active.modal')
+            $selector.removeClass('active').addClass('outgoing')
+            setTimeout(function(){ $('.outgoing').remove() }, 500)
+        }
+
+        function showModal(opts){
+            removeModal()
+
+            var inst = new Date().getTime()
+            var options = {
+                title: 'MODAL',
+                content: 'testing',
+                buttons: [],
+                template: '#modalTemplate'
+            }
+            $.extend(options, opts)
+            var template = $(options.template).html()
+            var $t = $(template)
+
+            $t.addClass('modal-'+inst)
+            $t.find('.title').html(options.title)
+
+            $t.find('.modal-content').html(options.content)
+
+            $('body').append($t)
+            setTimeout(function(){
+                $('.modal-'+inst).addClass("active modal")
+            }, 100)
+
+            $('a.close-modal').on('click', function(){
+                removeModal($(this).parents('.modal'))
+            })
+        }
+
+        function splitContent($el){
+            console.log("this", $el)
+            var data = $el.html()
+            var template = $('#splitContentTemplate').html()
+            var $t = $(template)
+            $t.find('textarea').html(data)
+            showModal({content:$t})
+        }
+
+        $('button').on('click', showModal)
+        $('.section').on('click', function(){
+            splitContent($(this))
+        })
+    </script>
+{% endblock footer %}
+
+

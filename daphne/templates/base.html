@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+{# This is for resources that ALL PAGES use #}
+<html>
+<head>
+    <title>{{title}}</title>
+    {% block head %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="{% static 'lib/js/jquery/jquery.min.js' %}"></script>
+
+    {# admin only #}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %} ">
+</head>
+<body>
+    {% block body %}{% endblock %}
+    {% if user.is_staff %}
+        {# load in the admin scripts #}
+    {% endif %}
+    {% block footer %}{% endblock %}
+</body>
+</html>
